@@ -117,7 +117,7 @@ function renderCanvas(canvasSize) {
 	})
 	pixel.addEventListener("mouseout", (e) => {
 		if(isMouseDown) {
-			if(isGradient) {
+			if(isGradient && !isRandomColor) {
 				e.target.style.background = pickedColor;
 				e.target.style.opacity = currentOpacity;
 				currentOpacity += 0.1;
@@ -126,8 +126,14 @@ function renderCanvas(canvasSize) {
 					currentOpacity = 0;
 				}
 			}
-			if(isRandomColor) {
+			if(isRandomColor && isGradient) {
 				e.target.style.background = colors[getRandomColor(colors)];
+				e.target.style.opacity = currentOpacity;
+				currentOpacity += 0.1;
+				if(currentOpacity >= 1) {
+					isGradient = false;
+					currentOpacity = 0;
+				}
 			}
 		}
 	})
